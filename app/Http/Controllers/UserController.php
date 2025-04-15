@@ -65,30 +65,24 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $validated = $request->validate([
+            "user_name" => "required|regex:/^[a-zA-Z0-9\s]+$/",
+            "user_email" => "required|email|unique:users,user_email," . $id . ",id",
+            "user_phone" => "required|string|min:10|max:13",
+            "user_address" => "required|regex:/^[a-zA-Z0-9\s]+$/",
+        ]);
 
+        $data = [
+            "password" => Hash::make($request->password),
+            "user_name" => $request->user_name,
+            "user_email" => $request->user_email,
+            "user_phone" => $request->user_phone,
+            "user_address" => $request->user_address,
+        ];
 
-        try {
-            $validated = $request->validate([
-                "user_name" => "required|regex:/^[a-zA-Z0-9\s]+$/",
-                "user_email" => "required|email|unique:users,user_email," . $id . ",id",
-                "user_phone" => "required|string|min:10|max:13",
-                "user_address" => "required|regex:/^[a-zA-Z0-9\s]+$/",
-            ]);
+        $update = User::where(['id' => $id])->update($data);
 
-            $data = [
-                "password" => Hash::make($request->password),
-                "user_name" => $request->user_name,
-                "user_email" => $request->user_email,
-                "user_phone" => $request->user_phone,
-                "user_address" => $request->user_address,
-            ];
-
-            $update = User::where(['id' => $id])->update($data);
-
-            return response()->json($update);
-        } catch (\Throwable $th) {
-            return response()->json($th);
-        }
+        return response()->json($update);
     }
 
     /**
