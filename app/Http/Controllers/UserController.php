@@ -35,7 +35,7 @@ class UserController extends Controller
             "user_name" => "required|regex:/^[a-zA-Z0-9\s]+$/",
             "user_email" => "required|email|unique:users,user_email",
             "user_phone" => "required|string|min:10|max:13",
-            "user_address" => "required|regex:/^[a-zA-Z0-9\s]+$/",
+            "user_address" => "required|regex:/^[^\r\n]*$/",
         ]);
 
 
@@ -69,7 +69,7 @@ class UserController extends Controller
             "user_name" => "required|regex:/^[a-zA-Z0-9\s]+$/",
             "user_email" => "required|email|unique:users,user_email," . $id . ",id",
             "user_phone" => "required|string|min:10|max:13",
-            "user_address" => "required|regex:/^[a-zA-Z0-9\s]+$/",
+            "user_address" => "required|regex:/^[^\r\n]*$/",
         ]);
 
         $data = [
