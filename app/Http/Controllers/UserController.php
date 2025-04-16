@@ -34,7 +34,7 @@ class UserController extends Controller
         $validated = $request->validate([
             "user_name" => "required|regex:/^[a-zA-Z0-9\s]+$/",
             "user_email" => "required|email|unique:users,user_email",
-            "user_phone" => "required|string|min:10|max:13",
+            "user_phone" => "required|min:10|max:13",
             "user_address" => "required|regex:/^[^\r\n]*$/",
         ]);
 
@@ -68,7 +68,7 @@ class UserController extends Controller
         $validated = $request->validate([
             "user_name" => "required|regex:/^[a-zA-Z0-9\s]+$/",
             "user_email" => "required|email|unique:users,user_email," . $id . ",id",
-            "user_phone" => "required|string|min:10|max:13",
+            "user_phone" => "required|min:10|max:13",
             "user_address" => "required|regex:/^[^\r\n]*$/",
         ]);
 
